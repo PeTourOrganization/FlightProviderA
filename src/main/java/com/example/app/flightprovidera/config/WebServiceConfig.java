@@ -28,7 +28,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
         var wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("FlightsPort");
         wsdl11Definition.setLocationUri("/ws");
-        wsdl11Definition.setTargetNamespace("http://localhost:8081/flights");
+        wsdl11Definition.setTargetNamespace("http://localhost:8080/flights");
         wsdl11Definition.setSchema(flightsSchema);
         return wsdl11Definition;
     }

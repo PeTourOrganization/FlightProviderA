@@ -10,7 +10,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Endpoint
 public class ProviderAEndPoint {
-    private static final String NAMESPACE_URI = "http://localhost:8081/flights";
+    private static final String NAMESPACE_URI = "http://localhost:8080/flights";
     private final SearchService searchService;
 
     public ProviderAEndPoint(SearchService searchService) {

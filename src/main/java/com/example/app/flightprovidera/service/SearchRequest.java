@@ -9,16 +9,16 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.time.LocalDateTime;
 
-@XmlRootElement(name = "SearchRequest", namespace = "http://localhost:8081/flights")
+@XmlRootElement(name = "SearchRequest", namespace = "http://localhost:8080/flights")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SearchRequest {
-	@XmlElement(namespace = "http://localhost:8081/flights", required = true)
+	@XmlElement(namespace = "http://localhost:8080/flights", required = true)
 	private String origin = "";
 
-	@XmlElement(namespace = "http://localhost:8081/flights", required = true)
+	@XmlElement(namespace = "http://localhost:8080/flights", required = true)
 	private String destination = "";
 
-	@XmlElement(namespace = "http://localhost:8081/flights", required = true)
+	@XmlElement(namespace = "http://localhost:8080/flights", required = true)
 	@XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
 	private LocalDateTime departureDate;
 
