@@ -1,6 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.2'
+//    id 'org.springframework.boot' version '3.4.2'
+    id 'org.springframework.boot' version '3.4.7'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java-library'
     // JAXB Plugin
@@ -30,7 +31,13 @@ configurations {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.glassfish.hk2:osgi-resource-locator:1.0.3'
+
+    // The Implementation (This contains the ProviderImpl you are missing)
+    implementation 'com.sun.xml.ws:jaxws-rt:4.0.2'
 
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.15'
 
@@ -40,6 +47,9 @@ dependencies {
     implementation 'wsdl4j:wsdl4j'
     // JAXB API
     implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'jakarta.xml.soap:jakarta.xml.soap-api:3.0.1'
+    implementation 'com.sun.xml.messaging.saaj:saaj-impl:3.0.4'
+
     // JAXB Runtime (Required engine for Runtime)
     runtimeOnly 'com.sun.xml.bind:jaxb-impl:4.0.0'
     jaxb 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
@@ -56,10 +66,10 @@ dependencies {
 tasks.register('FlightDetailsWsdl', JavaExec) {
     ext {
         wsdlDir = file("./src/main/resources")
-        wsdlFile = file("${wsdlDir}/OTA_AirFlifoLLS2.1.1RQ.wsdl")
-        packageName = "com.example.app.flightprovidera.flightdetails"
+        wsdlFile = file("${wsdlDir}/OTA_AirFlifoLLS2_1_1RQ/OTA_AirFlifoLLS2.1.1RQ.wsdl")
+        packageName = "com.example.app.flightprovidera.flightflifo"
         autonameResolution = true
-        wsdlLocation = "classpath:/OTA_AirFlifoLLS2.1.1RQ.wsdl"
+        wsdlLocation = "classpath:/OTA_AirFlifoLLS2_1_1RQ/OTA_AirFlifoLLS2.1.1RQ.wsdl"
         outDir = "./src/main/java"
     }
     mainClass = 'org.apache.cxf.tools.wsdlto.WSDLToJava'
@@ -69,6 +79,30 @@ tasks.register('FlightDetailsWsdl', JavaExec) {
     // set task inputs/outputs for up-to-date checks
     inputs.file wsdlFile
     outputs.dir outDir
+}
+
+
+
+tasks.register('FlightAvailWsdl', JavaExec) {
+    ext {
+        wsdlDir = file("./src/main/resources")
+        wsdlFile = file("${wsdlDir}/OTA_AirAvailLLS2_4_0RQ/OTA_AirAvailLLS2.4.0RQ.wsdl")
+        packageName = "com.example.app.flightprovidera.flightavail"
+        autonameResolution = true
+        wsdlLocation = "classpath:/OTA_AirAvailLLS2_4_0RQ/OTA_AirAvailLLS2.4.0RQ.wsdl"
+        outDir = "./src/main/java"
+    }
+    mainClass = 'org.apache.cxf.tools.wsdlto.WSDLToJava'
+    args('-client', '-autoNameResolution', '-p', packageName, '-wsdlLocation', wsdlLocation, '-d', outDir, wsdlFile)
+    classpath = configurations.cxf
+
+    // set task inputs/outputs for up-to-date checks
+    inputs.file wsdlFile
+    outputs.dir outDir
+}
+
+tasks.named('bootJar') {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 tasks.named('test') {

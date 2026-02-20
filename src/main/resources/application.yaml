@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: FlightProviderA
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant-path-matcher
+
+
+#springdoc:
+#  swagger-ui:
+#    path: /swagger-ui.html
+#    enabled: true
+#    operations-sorter: alpha
+#  api-docs:
+#    path: /v3/api-docs
