@@ -36,7 +36,7 @@ class FlightProviderAApplicationTests {
     @Test
     public void testGetFlightsAvailableSuccess(){
         var requestPayload = new StringSource(
-                "<flig:SearchRequest xmlns:flig='http://localhost:8080/flights'>" +
+                "<flig:SearchRequest xmlns:flig='http://petour.com/flights'>" +
                         "   <flig:origin>IST</flig:origin>" +
                         "   <flig:destination>JFK</flig:destination>" +
                         "   <flig:departureDate>2026-05-25T09:00:00</flig:departureDate>" +
@@ -46,7 +46,7 @@ class FlightProviderAApplicationTests {
         mockClient.sendRequest(withPayload(requestPayload))
                 .andExpect(noFault())
                 .andExpect(xpath("//ns3:hasError",
-                        Collections.singletonMap("ns3", "http://localhost:8080/flights"))
+                        Collections.singletonMap("ns3", "http://petour.com/flights"))
                         .evaluatesTo(false));
     }
 
